@@ -12,7 +12,7 @@ This plugin extends the default plugin available in gazebo_ros_control. In parti
 
 Since the robot is made of a UR5 and a Pisa/IIT hand, we need to assign only a specific set of joints to one plugin and then use several plugins under different robotNamespaces. This is possible using the tag filterJointsParam.
 
-  ### Install PCL Libraries
+  ### Install Point Cloud Libraries
 
 ```
 sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/pcl
@@ -34,12 +34,21 @@ The following controllers are enabled:
 -ur5/arm_controller/follow_joint_trajectory
 -soft_hand/joint_trajectory_controller
 ```
+## Launch Rviz
+
+```
+roslaunch ur5_moveit moveit_rviz.launch
+```
 
 ## Launch vision node
 
 ```
 roslaunch ur5_plan_grasp vision.launch 
 ```
+In Rviz you can visualize:
+  - PointCloud2 
+  - MarkerArray
+  - PoseArray 
 
 ## Launch trajectory planner
 
@@ -47,14 +56,8 @@ roslaunch ur5_plan_grasp vision.launch
 roslaunch ur5_plan_grasp trajectory_planner.launch 
 ```
 
-## Grasp action
+## Launch Grasp action
 
 ```
 roslaunch ur5_plan_grasp graspit.launch 
-```
-
-## Rviz visualization
-
-```
-roslaunch ur5_moveit moveit_rviz.launch
 ```

@@ -2,7 +2,11 @@
 
 ## Requirements
 
-  ### PCL Libraries
+  ### Install libhwi_switch_gazebo_ros_control.so
+  
+  from [here]. (https://github.com/nikhilkalige/filter_gazebo_plugins/tree/master/cob_gazebo_ros_control)
+
+  ### Install PCL Libraries
 
 ```
 sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/pcl

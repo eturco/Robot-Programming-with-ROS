@@ -4,7 +4,7 @@
 
   ### Install libhwi_switch_gazebo_ros_control.so
   
-  from [here]. (https://github.com/nikhilkalige/filter_gazebo_plugins/tree/master/cob_gazebo_ros_control)
+  from [here](https://github.com/nikhilkalige/filter_gazebo_plugins/tree/master/cob_gazebo_ros_control).
 
   ### Install PCL Libraries
 

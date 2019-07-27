@@ -1,0 +1,7 @@
+<launch>
+
+<group ns="ur5">
+  <node name="vision" pkg="vision" type="vision" respawn="false" output="screen"/>
+</group>
+ 
+</launch>

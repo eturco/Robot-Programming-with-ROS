@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <gazebo>
+    <plugin name="ros_control" filename="libhwi_switch_gazebo_ros_control.so">
+      <!--libgazebo_ros_control.so libhwi_switch_gazebo_ros_control.so -->
+      <robotNamespace>ur5</robotNamespace>
+      <robotSimType>cob_gazebo_ros_control/HWISwitchRobotHWSim</robotSimType>
+      <!--robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType-->
+      <legacyModeNS>true</legacyModeNS>
+      <filterJointsParam>joint_names</filterJointsParam> <!-- It allows to spawn more than one robot in the same simulation-->
+    </plugin>
+  </gazebo>
+
+</robot>

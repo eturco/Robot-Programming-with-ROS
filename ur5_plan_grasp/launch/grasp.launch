@@ -1,0 +1,7 @@
+<launch>
+
+	<node name="grasp" pkg="grasp_it" type="grasp_it" respawn="false" output="screen">
+  		<param name="grasp_value" value="1" />
+	</node>
+
+</launch>

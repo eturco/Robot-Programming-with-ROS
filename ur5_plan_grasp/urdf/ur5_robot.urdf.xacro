@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro"
+       name="ur5" >
+
+  <xacro:arg name="transmission_hw_interface" default="PositionJointInterface"/>
+  <xacro:arg name="robot_name" default="ur5"/>
+  <xacro:arg name="prefix" default="ur"/>
+  <xacro:arg name="hand_name" default="soft_hand"/>
+
+  <xacro:arg name="cam_p" default="'1.25 0 1.4'"/>  
+  
+  <xacro:arg name="cam_o" default="'0 0.757079632679 3.14'"/>  
+  
+  <xacro:arg name="gazebo" default="true"/>
+  <xacro:arg name="ft_sensor" default="optoforce"/>  
+  <xacro:arg name="kinect" default="true"/>  
+  <xacro:arg name="parent" default="world"/>  
+
+  <!-- common stuff -->
+  <xacro:include filename="$(find ur5_plan_grasp)/urdf/plugin.gazebo.xacro" />
+
+  <!-- ur5 -->
+  <xacro:include filename="$(find ur5_plan_grasp)/urdf/ur5.urdf.xacro" />
+
+  <!-- arm -->
+  <xacro:ur5_robot prefix="" joint_limited="false" />
+
+  <!-- FT Sensor -->
+  <xacro:include filename="$(find ur5_plan_grasp)/urdf/opto_ft_interface_macro.xacro" />
+  <xacro:include filename="$(find ur5_plan_grasp)/urdf/opto_ft_interface_gazebo.xacro" />
+
+  <!-- Kinect -->
+  <xacro:include filename="$(find ur5_plan_grasp)/urdf/kinect_camera_macro.xacro" />
+  <xacro:include filename="$(find ur5_plan_grasp)/urdf/kinect_camera_gazebo.xacro" />
+  
+  <!-- Soft Hand -->  
+  <xacro:include filename="$(find soft_hand_description)/model/soft_hand.urdf.xacro" />
+
+  <xacro:if value="$(arg kinect)">    
+    <xacro:kinect_camera parent="$(arg parent)" cam_p="$(arg cam_p)" cam_o="$(arg cam_o)"/>
+
+      <xacro:if value="$(arg gazebo)">
+      <xacro:kinect_gazebo prefix="" frame="camera_link"/>
+      </xacro:if>
+  </xacro:if>
+
+   <xacro:if value="$(arg gazebo)">
+      <xacro:opto_ft_interface_gazebo prefix="$(arg prefix)_" robot_ns=""/>
+   </xacro:if>   
+   <xacro:property name="damping_value" value="0.1" />
+   <xacro:property name="friction_value" value="0.1" />
+   <xacro:opto_ft_interface prefix="$(arg prefix)_" parent="wrist_3_link" rotation="-1.57"/> 
+
+  <xacro:soft_hand parent="$(arg prefix)_opto_ft_link" name="soft_hand" withAdaptiveTransmission="true" useMimicTag="false" left="false">
+    <origin xyz="0.0 0.0 0.03" rpy="0 0 0"/>
+  </xacro:soft_hand>
+
+<link name="world"/>
+
+  <joint name="world_joint" type="fixed">
+       <parent link="world"/>
+       <child link="t_ur_link"/>
+	<origin xyz="0 0 0.44" rpy="0 0 0"/>
+    </joint>
+
+
+ <link name="t_ur_link">
+  <inertial>
+     <mass value="100.0"/>
+     <inertia  ixx="1" ixy="0.00"  ixz="0.00" iyy="1" iyz="0.00" izz="1" />
+  </inertial>
+    <visual>
+	<origin xyz="0 0 0.0" rpy="0 0 0"/> 
+        <geometry>
+            <box size="1.04 0.76 0.88"/>
+        </geometry>
+        <material name="blue"/>
+    </visual>
+    <collision>
+	<origin xyz="0 0 0.0" rpy="0 0 0"/> 
+        <geometry>
+            <box size="1.04 0.76 0.88"/>
+        </geometry>
+    </collision>
+</link>
+
+
+<link name="ur_plate">
+   <inertial>
+     <mass value="10.0"/>
+     <inertia  ixx="1" ixy="0.00"  ixz="0.00" iyy="1" iyz="0.00" izz="1" />
+  </inertial>
+    <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+            <box size="0.2 0.5 0.02"/>
+        </geometry>
+        <material name="black"/>
+    </visual>
+    <collision>
+        <origin xyz="0 0 0.01" rpy="0 0 0"/>
+        <geometry>
+            <box size="0.2 0.5 0.02"/>
+        </geometry>
+    </collision>
+ </link>
+
+<joint name="t_plate_joint" type="fixed">
+       <parent link="t_ur_link"/>
+       <child link="ur_plate"/>
+	<origin xyz="-0.42  0.13 0.44" rpy="0 0 0"/> 
+    </joint>
+
+<joint name="plate_ur_joint" type="fixed">
+       <parent link="ur_plate"/>
+       <child link="base_link"/>
+	<origin xyz="0.0  0.0 0.02" rpy="0 0 0"/> 
+    </joint>
+
+</robot>

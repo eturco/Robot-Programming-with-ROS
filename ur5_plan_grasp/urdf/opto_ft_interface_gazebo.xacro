@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:macro name="opto_ft_interface_gazebo" params="prefix robot_ns">
+        <gazebo reference="${prefix}opto_ft_link">
+            <material>Gazebo/LightGrey</material>
+        </gazebo>
+
+        <gazebo reference="${prefix}opto_ft_joint">
+            <provideFeedback>true</provideFeedback>
+            <disableFixedJointLumping>true</disableFixedJointLumping>
+        </gazebo>
+
+        <gazebo>
+            <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+                <updateRate>100.0</updateRate>
+                <topicName>/${robot_ns}/ft_sensor</topicName>
+                <jointName>${prefix}opto_ft_joint</jointName>
+            </plugin>
+        </gazebo>
+        
+    </xacro:macro>
+
+</robot>

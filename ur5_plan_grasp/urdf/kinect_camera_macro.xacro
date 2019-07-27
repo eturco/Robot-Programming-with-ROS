@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="kinect_camera" params="parent cam_p cam_o">
+
+<!-- some constants -->
+    <xacro:property name="cam_px" value="0" />
+    <xacro:property name="cam_py" value="-0.7" /> 
+    <xacro:property name="cam_pz" value="1.4" />
+    <xacro:property name="cam_or" value="0" />
+    <xacro:property name="cam_op" value="0.757079632679" />
+    <xacro:property name="cam_oy" value="0.5" />
+    <xacro:property name="M_PI2" value="1.57079632679" />
+    <xacro:property name="M_PI" value="3.14159265359" />
+    <xacro:property name="mM_PI2" value="-1.57079632679" />
+    <xacro:property name="kinect_cam_py" value="-0.0125"/>
+
+<!-- hand specific color codes -->    
+    <material name="DarpaGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+    </material>
+    <material name="DarpaBlue"> <!-- NOT IN USE ?-->
+        <color rgba="0.0 0.5 0.5 1.0"/>
+    </material> 
+    
+<!-- Kinect Camera -->
+
+    <joint name="camera_rgb_joint" type="fixed">
+      <origin xyz="${cam_p}" rpy="${cam_o}"/>
+      <parent link="${parent}"/>
+      <child link="camera_rgb_frame" />
+    </joint>
+    <link name="camera_rgb_frame"/>
+
+    <joint name="camera_rgb_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${mM_PI2} 0 ${mM_PI2}" />
+      <parent link="camera_rgb_frame" />
+      <child link="camera_rgb_optical_frame" />
+    </joint>
+    <link name="camera_rgb_optical_frame"/>
+
+    <joint name="camera_joint" type="fixed">
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/> <!--xyz="-0.031 ${-kinect_cam_py} -0.016" -->
+      <parent link="camera_rgb_frame"/>
+      <child link="camera_link"/>
+    </joint>
+  
+      <link name="camera_link">
+        <inertial>
+        <origin xyz="0 0 0.02" rpy="0 0 0"/>
+        <mass value="3.129"/>
+        <inertia ixx="0.01464"  ixy="0.0005912"  ixz="0" iyy="0.01465" iyz="0" izz="0.002872" />
+      </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>    
+    <box size="0.05 0.05 0.05"/>
+      </geometry>
+      <material name="white">
+        <color rgba="1 1 0 1"/>
+      </material>        
+    </visual>
+    </link>
+
+    <!-- The fixed joints & links below are usually published by static_transformers launched by the OpenNi launch 
+         files. However, for Gazebo simulation we need them, so we add them here.
+         (Hence, don't publish them additionally!) -->
+    <joint name="camera_depth_joint" type="fixed">
+      <origin xyz="0 ${2 * -kinect_cam_py} 0" rpy="0 0 0" />
+      <parent link="camera_rgb_frame" />
+      <child link="camera_depth_frame" />
+    </joint>
+    <link name="camera_depth_frame"/>
+
+    <joint name="camera_depth_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${mM_PI2} 0 ${mM_PI2}" />
+      <parent link="camera_depth_frame" />
+      <child link="camera_depth_optical_frame" />
+    </joint>
+    <link name="camera_depth_optical_frame"/>
+<!-- Kinect Camera END -->
+  </xacro:macro>
+
+</robot>

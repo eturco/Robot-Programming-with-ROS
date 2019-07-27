@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+	
+  <arg name="moveit" default="true" />
+	
+  <!-- Loads the Gazebo world. -->
+  <include file="$(find ur5_plan_grasp)/launch/ur5_world.launch"/>
+  
+  <group ns="ur5">
+      <rosparam file="$(find ur5_plan_grasp)/controller/arm_controller_ur5.yaml" command="load"/>
+      <rosparam file="$(find ur5_plan_grasp)/config/joint_names.yaml" command="load" />
+      <rosparam file="$(find ur5_plan_grasp)/controller/joint_state_controller.yaml" command="load"/>
+      <include file="$(find ur5_plan_grasp)/launch/controller_utils.launch"/>
+      <node name="controller_spawner" pkg="controller_manager" type="controller_manager" respawn="false" output="screen" args="spawn arm_controller"/> 
+
+      <node ns="ur5" name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false" output="screen" args="load joint_group_position_controller" />
+
+      <!-- MoveIt-->
+      <group if="$(arg moveit)">
+        <remap from="/ur5/robot_description_semantic" to="/robot_description_semantic" />
+        <include file="$(find ur5_moveit)/launch/move_group.launch"/>
+      </group> 
+
+  </group>
+
+  <group ns="soft_hand">
+      <rosparam command="load" file="$(find ur5_plan_grasp)/config/soft_hand_joint_names.yaml" />
+      <rosparam file="$(find ur5_plan_grasp)/controller/soft_hand_controllers.yaml" command="load"/>
+      <include file="$(find ur5_plan_grasp)/launch/controller_utils.launch"/>
+      <node name="controller_spawner" pkg="controller_manager" type="controller_manager" respawn="false" output="screen" args="spawn soft_hand/joint_trajectory_controller"/> 
+  </group>
+
+   <include file="$(find ur5_moveit)/launch/planning_context.launch"/>
+
+</launch>

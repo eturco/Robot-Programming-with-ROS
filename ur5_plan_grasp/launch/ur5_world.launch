@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<launch>
+    
+    <arg name="debug" default="false"/>
+    <arg name="gui" default="true"/>
+    <arg name="paused" default="true"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="headless" default="false"/>
+    
+    <!-- Empty World -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="debug" value="$(arg debug)" />
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="headless" value="$(arg headless)"/>
+    </include>
+    
+    <!-- Load the URDF with the given hardware interface into the ROS Parameter Server -->
+    <include file="$(find ur5_plan_grasp)/launch/ur5_upload.launch">
+        <arg name="parent" default="world"/> 
+    </include>
+
+    <!-- Run a python script to send a service call to gazebo_ros to spawn a URDF robot -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model ur5 -param robot_description -z 0.02 -J shoulder_lift_joint -1.57 -J elbow_joint 1.57 -J wrist_2_joint 1.57 -J wrist_3_joint -1.57 -unpause"/>
+
+    <!-- Add a cuboid in a random position -->
+    <node name="object_spawner" pkg="ur5_plan_grasp" type="spawn_object" respawn="false" output="screen"
+	args="-sdf -model cube -file  $(find ur5_plan_grasp)/urdf/model.sdf -z 1.0 -R 0 -P -0 -Y 0"/>
+
+ </launch>

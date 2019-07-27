@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="opto_ft_interface" params="prefix parent rotation">
+    <!-- joint connecting robot flange to F/T interface -->
+    <joint name="${prefix}opto_ft_joint" type="fixed">
+      <!--origin xyz="0.0 0.0 0.04" rpy="0 0 ${rotation}"/ Kuka iiwa7-->
+      <origin xyz="0.0 0.07 0.0" rpy="${rotation} 0 0  "/>  <!-- UR5-->
+      <axis xyz="0 0 1"/>
+      <parent link="${parent}"/>
+      <child link="${prefix}opto_ft_link"/>
+    </joint>
+    <!-- link representing F/T interface -->
+    <link name="${prefix}opto_ft_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://ur5_plan_grasp/meshes/visual/new_ft_sensor.stl"/>
+        </geometry>
+        <material name="Optoforce/Grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://ur5_plan_grasp/meshes/collision/collision_new_ft_sensor.stl"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.1"/>
+        <origin xyz="0.35 0 0" rpy="0 0 0"/>
+        <inertia ixx="1e-3" ixy="0.0" ixz="0.0"
+                 iyy="1e-3" iyz="0.0"
+                 izz="1e-3"/>
+      </inertial>
+    </link>
+  </xacro:macro>
+</robot>

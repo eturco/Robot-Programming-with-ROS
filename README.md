@@ -6,6 +6,12 @@
   
   from [here](https://github.com/nikhilkalige/filter_gazebo_plugins/tree/master/cob_gazebo_ros_control).
 
+This plugin extends the default plugin available in gazebo_ros_control. In particular, it adds the following additional feature:
+
+- Enable joint filtering
+
+Since the robot is made of a UR5 and a Pisa/IIT hand, we need to assign only a specific set of joints to one plugin and then use several plugins under different robotNamespaces. This is possible using the tag filterJointsParam.
+
   ### Install PCL Libraries
 
 ```

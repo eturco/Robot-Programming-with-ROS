@@ -4,7 +4,7 @@
 
   ### Install libhwi_switch_gazebo_ros_control.so
   
-  from [here](https://github.com/nikhilkalige/filter_gazebo_plugins/tree/master/cob_gazebo_ros_control).
+  from [here](https://github.com/ipa320/cob_gazebo_plugins/tree/kinetic_dev/cob_gazebo_ros_control).
 
 This plugin extends the default plugin available in gazebo_ros_control. In particular, it adds the following additional feature:
 

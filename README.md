@@ -28,11 +28,10 @@ Compiling will result in a shared library,  ` ~/cob_gazebo_plugins/cob_gazebo_ro
 
 - Lastly, add your library path to the GAZEBO_PLUGIN_PATH:
 ```
-$ export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:~/cob_gazebo_plugins/cob_gazebo_plugins/build
 $ export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:~/cob_gazebo_plugins/cob_gazebo_ros_control/build/devel/lib/
 
 ```
-Note: This changes the path only for the current shell. If you want to use your plugin for every new temrinal you open, append the line above to the ~/.bashrc file.
+Note: This changes the path only for the current shell. If you want to use your plugin for every new temrinal you open, append the line above to the `~/.bashrc` file.
 
 
   ### Install Point Cloud Libraries

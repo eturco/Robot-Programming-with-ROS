@@ -81,7 +81,7 @@ Two trajectories will be planned:
 - Approach: the hand will go close to the object
 - Lift off: the hand will raise up while grabbing the object
 
-The second trajectory will wait for the success of the grasping action.
+For the second trajectory the planner will wait for the success of the grasping action.
 
 ## Launch Grasp action
 

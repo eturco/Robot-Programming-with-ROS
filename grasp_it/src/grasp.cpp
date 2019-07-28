@@ -42,7 +42,7 @@ void jointStates(const sensor_msgs::JointState msg) {
     state.data = msg.position.back();
 };
 
-int setValeurPoint(trajectory_msgs::JointTrajectory* trajectoire,int pos_tab, int val){
+int setValeurPoint(trajectory_msgs::JointTrajectory* trajectoire,int pos_tab, double val){
     trajectoire->points[0].positions[pos_tab] = val;
     return 0;
 }

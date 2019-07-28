@@ -1,0 +1,8 @@
+<launch>
+
+<group ns="ur5">
+
+  <node name="trajectory_planner" pkg="trajectory_planner" type="trajectory_planner" respawn="false" output="screen"/>
+</group>
+
+</launch>

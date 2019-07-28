@@ -1,8 +1,0 @@
-<launch>
-
-<group ns="ur5">
-
-  <node name="planning_trajectory" pkg="planning_trajectory" type="planning_trajectory" respawn="false" output="screen"/>
-</group>
-
-</launch>

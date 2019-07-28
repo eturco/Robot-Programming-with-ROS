@@ -11,6 +11,9 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   geometry_msgs
   tf
+  std_msgs
+  std_srvs
+  message_generation
 )
 
 catkin_package(

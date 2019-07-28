@@ -11,6 +11,9 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   trajectory_msgs
   sensor_msgs
+  std_msgs
+  std_srvs
+  message_generation
 )
 
 #find_package(Boost REQUIRED COMPONENTS)

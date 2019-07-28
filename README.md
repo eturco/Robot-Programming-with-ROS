@@ -77,9 +77,15 @@ In Rviz you can visualize:
 ```
 roslaunch ur5_plan_grasp trajectory_planner.launch 
 ```
+Two trajectories will be planned: 
+- Approach: the hand will go close to the object
+- Lift off: the hand will raise up while grabbing the object
+
+The second trajectory will wait for the success of the grasping action.
 
 ## Launch Grasp action
 
 ```
 roslaunch ur5_plan_grasp graspit.launch 
 ```
+For a tighter grasp, you can adjust the value of the parameter `grasp_value` within the launch file.

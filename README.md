@@ -88,4 +88,4 @@ For the second trajectory the planner will wait for the success of the grasping 
 ```
 roslaunch ur5_plan_grasp graspit.launch 
 ```
-For a tighter grasp you can adjust the value of the parameter `grasp_value` within the launch file.
+For a tighter grasp you can adjust the value of the parameter `grasp_value` (between 0 and 1) within the launch file.
